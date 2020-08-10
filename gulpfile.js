@@ -16,7 +16,7 @@ function watch() {
       baseDir: './dist',
     },
   })
-  gulp.watch('./css/*.css').on('change', browserSync.reload)
+  gulp.watch('./dist/css/*.css').on('change', browserSync.reload)
   gulp.watch('./dist/js/*js').on('change', browserSync.reload)
   gulp.watch('./dist/*.html').on('change', browserSync.reload)
 }
