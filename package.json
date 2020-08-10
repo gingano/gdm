@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
-  "scripts": {},
+  "scripts": {
+    "watch": "gulp watch",
+    "deploy": "gulp deploy",
+    "fast-deploy": "gulp surge"
+  },
   "author": "Alex Kovalenko",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.12",
+    "gulp": "^4.0.2",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-surge": "^0.1.4"
+  }
 }
