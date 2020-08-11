@@ -1,3 +1,4 @@
+import { createListWithTemplate, setScreen } from './helpers.js'
 import defaultData from '../content/data.js'
 
 const defaultImageUrl = 'img/default-image.jpg'
@@ -9,6 +10,7 @@ const state = {
   screen2CurrentButton: 'add',
 }
 let { accounts } = defaultData
+
 const screens = [...document.querySelectorAll('.screen')]
 const screen1AddButton = document.querySelector('.add-button')
 const screen2AddButton = document.querySelector('.buttons__button--add')
@@ -16,44 +18,24 @@ const screen2CancelButton = document.querySelector('.buttons__button--cancel')
 const form = document.querySelector('.form')
 const input = document.querySelector('.form__input')
 const template = document.getElementById('account-template')
+const accountsElement = document.querySelector('.accounts')
 let accountsList = document.querySelector('.accounts__list')
 let itemsArray = [...accountsList.querySelectorAll('.accounts__list-item')]
 
-const createListWithTemplate = (accountsArray, list) => {
-  const ul = document.createElement('ul')
-  ul.classList.add('accounts__list')
-  accountsArray.forEach((account) => {
-    const accountItem = document.importNode(template.content, true)
-    accountItem.querySelector('.accounts__list-item').id = account.id
-    accountItem.querySelector('.accounts__image').src = account.img
-    accountItem.querySelector('.accounts__title').textContent = account.title
-    ul.appendChild(accountItem)
-  })
-  list.replaceWith(ul)
-}
-
-const setScreen = () => {
-  state.screen2CurrentButton = 'add'
-  screens.forEach((screen) => {
-    screen.classList.add('screen--hidden')
-  })
-  screens
-    .find((screen) =>
-      [...screen.classList].includes(`screen--${state.currentScreen}`)
-    )
-    .classList.remove('screen--hidden')
-}
-
 const updateList = () => {
-  createListWithTemplate(accounts, accountsList)
+  createListWithTemplate(accounts, accountsList, template)
 }
 
 const updateFocus = () => {
   accountsList = document.querySelector('.accounts__list')
   itemsArray = [...accountsList.querySelectorAll('.accounts__list-item')]
 
-  if (itemsArray.length > 0) {
+  if (itemsArray.length > 0 && itemsArray[state.currentItemIndex]) {
     itemsArray[state.currentItemIndex].focus()
+  }
+
+  if (itemsArray.length > 0 && !itemsArray[state.currentItemIndex]) {
+    itemsArray[state.currentItemIndex - 1].focus()
   }
 }
 
@@ -61,7 +43,11 @@ updateList()
 
 window.addEventListener('load', () => {
   updateFocus()
-  setScreen()
+  setScreen(state, screens)
+})
+
+document.addEventListener('mousedown', (event) => {
+  event.preventDefault()
 })
 
 form.addEventListener('submit', (event) => {
@@ -72,7 +58,7 @@ form.addEventListener('submit', (event) => {
 
 screen1AddButton.addEventListener('click', () => {
   state.currentScreen = 2
-  setScreen()
+  setScreen(state, screens)
 
   input.focus()
   state.inputFocused = true
@@ -88,11 +74,13 @@ screen2AddButton.addEventListener('click', () => {
       img: defaultImageUrl,
     })
     updateList()
+    accountsElement.classList.remove('accounts--hidden')
     input.value = ''
     state.currentScreen = 1
-    setScreen()
+    setScreen(state, screens)
     updateFocus()
     state.inputFocused = false
+    state.focusOutOfList = false
   }
 })
 
@@ -100,9 +88,10 @@ screen2CancelButton.addEventListener('click', (event) => {
   event.preventDefault()
   input.value = ''
   state.currentScreen = 1
-  setScreen()
+  setScreen(state, screens)
   updateFocus()
   state.inputFocused = false
+  state.focusOutOfList = false
 })
 
 document.addEventListener('keydown', (event) => {
@@ -156,6 +145,15 @@ document.addEventListener('keydown', (event) => {
     accounts = accounts.filter(
       (item, index) => index !== state.currentItemIndex
     )
+
+    if (!accounts[state.currentItemIndex]) {
+      state.currentItemIndex -= 1
+    }
+
+    if (accounts.length === 0) {
+      accountsElement.classList.add('accounts--hidden')
+      screen1AddButton.focus()
+    }
 
     updateList()
     updateFocus()

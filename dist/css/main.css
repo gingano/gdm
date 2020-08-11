@@ -35,6 +35,10 @@
   padding: 0;
 }
 
+.accounts--hidden {
+  display: none;
+}
+
 .accounts__list {
   list-style: none;
   margin: 0;

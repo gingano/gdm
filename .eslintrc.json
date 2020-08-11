@@ -33,6 +33,12 @@
     "no-restricted-syntax": "off",
     "guard-for-in": "off",
     "import/extensions": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ]
   }
 }
