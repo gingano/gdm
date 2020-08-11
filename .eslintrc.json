@@ -31,6 +31,8 @@
     "import/prefer-default-export": "off",
     "no-useless-escape": "off",
     "no-restricted-syntax": "off",
-    "guard-for-in": "off"
+    "guard-for-in": "off",
+    "import/extensions": "off",
+    "no-plusplus": "off"
   }
 }
