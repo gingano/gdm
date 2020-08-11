@@ -23,5 +23,8 @@
     "gulp-surge": "^0.1.4",
     "prettier": "^2.0.5",
     "prettier-eslint": "^11.0.0"
+  },
+  "resolutions": {
+    "gift": "^0.10.2"
   }
 }
