@@ -17,20 +17,12 @@
     <div class="screen screen--1">
       <div class="accounts">
         <ul class="accounts__list">
-          <li class="accounts__list-item" tabindex="0">
-            <img src="img/default-image.jpg" alt="avatar" class="accounts__image">
-            <span class="accounts__title">Some text</span>
-          </li>
-
-          <li class="accounts__list-item" tabindex="0">
-            <img src="img/default-image.jpg" alt="avatar" class="accounts__image">
-            <span class="accounts__title">Some text</span>
-          </li>
-
-          <li class="accounts__list-item" tabindex="0">
-            <img src="img/default-image.jpg" alt="avatar" class="accounts__image">
-            <span class="accounts__title">Some text</span>
-          </li>
+          <template id="account-template">
+            <li class="accounts__list-item" tabindex="0">
+              <img src="" alt="avatar" class="accounts__image">
+              <span class="accounts__title"></span>
+            </li>
+          </template>
         </ul>
       </div>
 
@@ -39,15 +31,16 @@
 
     <div class="screen screen--hidden screen--2">
       <form class="form">
-        <input class="form__input" type="text">
+        <input class="form__input" type="text" required>
       </form>
       <div class="buttons">
-        <button class="buttons__button">ADD</button>
-        <button class="buttons__button">cancel</button>
+        <button class="buttons__button buttons__button--add">ADD</button>
+        <button class="buttons__button buttons__button--cancel">cancel</button>
       </div>
     </div>
   </div>
-  <script src="js/main.js"></script>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
