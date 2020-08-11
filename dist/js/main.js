@@ -30,6 +30,10 @@ const updateFocus = () => {
   accountsList = document.querySelector('.accounts__list')
   itemsArray = [...accountsList.querySelectorAll('.accounts__list-item')]
 
+  if (!itemsArray[state.currentItemIndex]) {
+    state.currentItemIndex = 0
+  }
+
   if (itemsArray.length > 0 && itemsArray[state.currentItemIndex]) {
     itemsArray[state.currentItemIndex].focus()
   }
@@ -92,6 +96,10 @@ screen2CancelButton.addEventListener('click', (event) => {
   updateFocus()
   state.inputFocused = false
   state.focusOutOfList = false
+
+  if (accounts.length === 0) {
+    screen1AddButton.focus()
+  }
 })
 
 document.addEventListener('keydown', (event) => {
